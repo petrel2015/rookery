@@ -24,17 +24,17 @@ const open = ref(false)
   padding: 0;
   border: none;
   background: transparent;
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--ink-lo);
   transition: color 0.15s ease;
 }
 
 .donate-entry:hover {
-  color: var(--accent);
+  color: var(--blue);
 }
 
 @media (prefers-reduced-motion: reduce) {

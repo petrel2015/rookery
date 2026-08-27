@@ -1,37 +1,78 @@
 /* ---------------------------------- */
-/* 设计基调：瑞士国际主义 —— 纸白、墨黑、发丝线、一抹红 */
+/* 设计基调：机构投研报告 —— 白纸墨阶、发丝线、唯一电光蓝 */
+/* 衬线叙事（ET Book）+ 等宽事实（mono / tabular-nums） */
+/* tokens 提炼自 research-report-style（对标 McKinsey × GS-MS 研报） */
 /* ---------------------------------- */
 
-:root {
-  --bg: #f7f6f2;
-  --surface: #ffffff;
-  --ink: #141414;
-  --ink-2: #5c5a55;
-  --ink-3: #97948c;
-  --line: #e3e1da;
-  --line-strong: #141414;
-  --accent: #d52b1e;
-  --accent-ink: #faf7f2;
-  --chip-bg: #ffffff;
-  --cover-bg: #eceae4;
-  --shadow: 0 1px 2px rgba(20, 20, 20, 0.04), 0 8px 24px rgba(20, 20, 20, 0.06);
-  --font-sans: 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', Arial, sans-serif;
-  --font-mono: ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace;
+@font-face {
+  font-family: 'et-book';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./assets/fonts/et-book-roman-line-figures.woff') format('woff');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'et-book';
+  font-style: italic;
+  font-weight: 400;
+  src: url('./assets/fonts/et-book-display-italic-old-style-figures.woff') format('woff');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'et-book';
+  font-style: normal;
+  font-weight: 700;
+  src: url('./assets/fonts/et-book-bold-line-figures.woff') format('woff');
+  font-display: swap;
 }
 
+:root {
+  /* 纸面 */
+  --paper: #ffffff;
+  --paper-hi: #f7f9fc; /* 面板 / hover 底 */
+  /* 墨阶（正文只用这三档） */
+  --ink: #051c2c;
+  --ink-md: #42566a;
+  --ink-lo: #8595a6;
+  /* 发丝线 */
+  --line: #dbe2ea;
+  --line-lo: #eef1f6;
+  /* 强调色（全站唯一） */
+  --blue: #2251ff;
+  --blue-hi: #1233b8;
+  --blue-lo: #7d9bff;
+  /* 语义负面：只用于下跌/缺失/风险 */
+  --neg: #c22f4e;
+  /* 来源分类徽章专用色（正文与图表禁止挪用） */
+  --green: #008a6d;
+  --copper: #b07a10;
+  --violet: #7a45c9;
+  /* 字体：衬线叙事 + 等宽事实（中文回退衬线，绝不用黑体正文） */
+  --serif: 'et-book', 'Noto Serif SC', 'Songti SC', 'SimSun', 'Iowan Old Style', Palatino, Georgia,
+    serif;
+  --mono: Menlo, Consolas, 'SF Mono', monospace;
+  /* 唯一浅投影 token（弹窗 / 内嵌卡专用，其余组件禁投影） */
+  --shadow: 0 1px 2px rgba(5, 28, 44, 0.05), 0 8px 28px rgba(5, 28, 44, 0.07);
+  /* 兼容别名：旧组件变量名 → 新 token（值即风格） */
+  --bg: var(--paper);
+  --surface: var(--paper);
+  --font-mono: var(--mono);
+}
+
+/* 暗色：同一套纪律的倒置墨阶（深海军蓝纸 + 浅墨 + 亮一档的蓝） */
 html.dark {
-  --bg: #101010;
-  --surface: #191919;
-  --ink: #f0eeea;
-  --ink-2: #a8a59e;
-  --ink-3: #6e6b65;
-  --line: #2a2a2a;
-  --line-strong: #f0eeea;
-  --accent: #e6392b;
-  --accent-ink: #141414;
-  --chip-bg: #191919;
-  --cover-bg: #222222;
-  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 10px 28px rgba(0, 0, 0, 0.35);
+  --paper: #0a141f;
+  --paper-hi: #101e2c;
+  --ink: #e7edf4;
+  --ink-md: #a3b1c0;
+  --ink-lo: #74889c;
+  --line: #223448;
+  --line-lo: #16222f;
+  --blue: #7d9bff;
+  --blue-hi: #a8bdff;
+  --blue-lo: #2251ff;
+  --neg: #e56a82;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 10px 28px rgba(0, 0, 0, 0.4);
 }
 
 * {
@@ -44,12 +85,21 @@ html {
 
 body {
   margin: 0;
-  background: var(--bg);
+  background: var(--paper);
   color: var(--ink);
-  font-family: var(--font-sans);
-  font-size: 15px;
-  line-height: 1.65;
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.68;
+  -webkit-font-smoothing: antialiased;
   transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+::selection {
+  background: rgba(34, 81, 255, 0.15);
+}
+
+html.dark ::selection {
+  background: rgba(125, 155, 255, 0.28);
 }
 
 a {
@@ -72,18 +122,131 @@ img {
   padding: 0 28px;
 }
 
-/* 小号大写标签 —— 瑞士风的「规格单」语气 */
+/* 小号大写标签：等宽、宽字距 —— 研报的「规格单」语气 */
 .eyebrow {
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--ink-lo);
+}
+
+/* ── 封面 kicker：等宽大写宽字距、电光蓝 ── */
+.kicker {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.28em;
+  color: var(--blue);
+  text-transform: uppercase;
+  margin: 0 0 14px;
+}
+
+/* ── 章节头：等宽编号 kicker + 3px 蓝短划 ── */
+.sec-no {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.26em;
+  color: var(--blue);
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 10px;
+}
+
+.sec-no::before {
+  content: '';
+  flex: 0 0 26px;
+  height: 3px;
+  background: var(--blue);
+}
+
+/* ── 指标条：等宽粗体蓝数值 + 小字说明 ── */
+.metric-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0 28px;
+}
+
+.metric-strip .m .v {
+  font-family: var(--mono);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--blue);
+  font-variant-numeric: tabular-nums;
+}
+
+.metric-strip .m .k {
+  font-size: 12px;
+  color: var(--ink-md);
+  margin-top: 3px;
+  line-height: 1.5;
+}
+
+/* ── Analyst note：上下发丝线、无底色无左边条 ── */
+.note-box {
+  border: 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 12px 0 13px;
+  font-size: 13.5px;
+  color: var(--ink-md);
+  line-height: 1.8;
+}
+
+.note-box::before {
+  content: 'Methodology';
+  display: block;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ink-lo);
+  margin-bottom: 8px;
+}
+
+/* ── 来源徽章（分类图例）── */
+.badge {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 3px;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.badge.b-blue {
+  background: var(--blue);
+}
+
+.badge.b-green {
+  background: var(--green);
+}
+
+.badge.b-violet {
+  background: var(--violet);
 }
 
 @media (max-width: 640px) {
   .container {
     padding: 0 18px;
+  }
+
+  .metric-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px 18px;
+  }
+}
+
+/* 全站动效尊重 prefers-reduced-motion（覆盖各组件的 color/transform 过渡） */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
   }
 }

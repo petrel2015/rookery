@@ -137,7 +137,7 @@ onBeforeUnmount(() => document.removeEventListener('keydown', onKeydown))
 </template>
 
 <style scoped>
-/* 遮罩 */
+/* 遮罩：墨海军蓝罩层 */
 .donation-overlay {
   position: fixed;
   inset: 0;
@@ -146,17 +146,18 @@ onBeforeUnmount(() => document.removeEventListener('keydown', onKeydown))
   align-items: center;
   justify-content: center;
   padding: 24px;
-  background: rgba(20, 20, 20, 0.45);
+  background: rgba(5, 28, 44, 0.5);
 }
 
-/* 弹窗：贴站点瑞士风 —— surface 底、发丝线、零圆角 */
+/* 弹窗：白纸底 + 墨描边 + 唯一浅投影，衬线标题 */
 .donation-dialog {
   position: relative;
   width: min(360px, calc(100vw - 48px));
   padding: 26px 24px 22px;
   text-align: center;
-  background: var(--surface);
+  background: var(--paper);
   border: 1px solid var(--ink);
+  border-radius: 8px;
   box-shadow: var(--shadow);
 }
 
@@ -170,12 +171,12 @@ onBeforeUnmount(() => document.removeEventListener('keydown', onKeydown))
   background: transparent;
   font-size: 14px;
   line-height: 1;
-  color: var(--ink-3);
+  color: var(--ink-lo);
   transition: color 0.15s ease;
 }
 
 .donation-close:hover {
-  color: var(--accent);
+  color: var(--blue);
 }
 
 .donation-title {
@@ -188,33 +189,35 @@ onBeforeUnmount(() => document.removeEventListener('keydown', onKeydown))
 .donation-subtitle {
   margin: 0 0 18px;
   font-size: 13px;
-  color: var(--ink-2);
+  color: var(--ink-md);
 }
 
-/* 支付方式切换：分段式原生按钮，键盘可达 */
+/* 支付方式切换：分段式描边控件，激活实心蓝（弹窗内唯一彩色焦点） */
 .donation-tabs {
   display: inline-flex;
   margin-bottom: 18px;
-  border: 1px solid var(--line-strong);
+  border: 1.5px solid var(--ink);
+  border-radius: 6px;
+  overflow: hidden;
 }
 
 .donation-tab {
   padding: 8px 18px;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.08em;
   color: var(--ink);
-  background: var(--surface);
+  background: var(--paper);
   transition: all 0.15s ease;
 }
 
 .donation-tab + .donation-tab {
-  border-left: 1px solid var(--line-strong);
+  border-left: 1.5px solid var(--ink);
 }
 
 .donation-tab.active {
-  background: var(--ink);
-  color: var(--bg);
+  background: var(--blue);
+  color: #fff;
 }
 
 /* 二维码：浅色码卡 + 深色码，暗色模式下也保证扫码成功率 */
@@ -223,6 +226,7 @@ onBeforeUnmount(() => document.removeEventListener('keydown', onKeydown))
   padding: 8px;
   background: #ffffff;
   border: 1px solid var(--line);
+  border-radius: 4px;
 }
 
 .donation-qr {
@@ -232,8 +236,8 @@ onBeforeUnmount(() => document.removeEventListener('keydown', onKeydown))
 
 .donation-hint {
   margin: 14px 0 0;
-  font-size: 12px;
-  color: var(--ink-2);
+  font-size: 12.5px;
+  color: var(--ink-md);
 }
 
 /* 弹窗过渡（贴站点 fade 惯例） */

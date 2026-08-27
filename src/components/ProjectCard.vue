@@ -16,6 +16,14 @@ const initials = computed(() => {
   if (zh) return zh[0]
   return p.name.replace(/[^A-Za-z]/g, '').slice(0, 2).toUpperCase() || 'P'
 })
+
+// 分类徽章（与页脚图例同色：蓝=扩展 绿=工具 紫=游戏）
+const BADGES = {
+  ext: { cls: 'b-blue', label: 'EXT' },
+  tool: { cls: 'b-green', label: 'TOOL' },
+  game: { cls: 'b-violet', label: 'GAME' },
+}
+const badge = computed(() => BADGES[props.project.category] || null)
 </script>
 
 <template>
@@ -43,7 +51,10 @@ const initials = computed(() => {
         <a class="title" :href="primaryLink" target="_blank" rel="noopener">
           {{ project.name }}<span class="title-arrow" aria-hidden="true">↗</span>
         </a>
-        <span v-if="project.year" class="year eyebrow">{{ project.year }}</span>
+        <span class="head-meta">
+          <span v-if="badge" class="badge" :class="badge.cls">{{ badge.label }}</span>
+          <span v-if="project.year" class="year">{{ project.year }}</span>
+        </span>
       </div>
 
       <p class="tagline">{{ project.tagline }}</p>
@@ -73,19 +84,17 @@ const initials = computed(() => {
 </template>
 
 <style scoped>
-/* ---------- 卡片公共 ---------- */
+/* ---------- 卡片：发丝线框、零投影、零位移（hover 唯一彩色焦点） ---------- */
 .card {
   display: flex;
-  background: var(--surface);
+  background: var(--paper);
   border: 1px solid var(--line);
   overflow: hidden;
-  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  transition: border-color 0.15s ease;
 }
 
 .card:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow);
-  border-color: var(--ink-3);
+  border-color: var(--blue-lo);
 }
 
 /* ---------- 封面 ---------- */
@@ -93,7 +102,7 @@ const initials = computed(() => {
   position: relative;
   display: block;
   flex-shrink: 0;
-  background: var(--cover-bg);
+  background: var(--paper-hi);
   border-bottom: 1px solid var(--line);
   overflow: hidden;
 }
@@ -106,7 +115,7 @@ const initials = computed(() => {
 }
 
 .card:hover .cover img {
-  transform: scale(1.025);
+  transform: scale(1.02);
 }
 
 .cover.is-contain img {
@@ -119,12 +128,13 @@ const initials = computed(() => {
   left: 10px;
   bottom: 10px;
   padding: 3px 8px;
-  background: var(--surface);
+  background: var(--paper);
   border: 1px solid var(--line);
-  color: var(--accent);
+  border-radius: 3px;
+  color: var(--blue);
 }
 
-/* 无截图时的占位封面：坐标纸 + 首字母 + 红点 */
+/* 无截图时的占位封面：坐标纸 + 首字母 + 蓝方点 */
 .cover-fallback {
   display: flex;
   align-items: center;
@@ -132,13 +142,13 @@ const initials = computed(() => {
   width: 100%;
   height: 100%;
   position: relative;
-  background-image: linear-gradient(var(--line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-image: linear-gradient(var(--line-lo) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line-lo) 1px, transparent 1px);
   background-size: 22px 22px;
 }
 
 .fallback-initials {
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 44px;
   font-weight: 700;
   letter-spacing: 0.06em;
@@ -149,10 +159,9 @@ const initials = computed(() => {
   position: absolute;
   right: 16px;
   bottom: 14px;
-  width: 9px;
-  height: 9px;
-  background: var(--accent);
-  border-radius: 50%;
+  width: 8px;
+  height: 8px;
+  background: var(--blue);
 }
 
 /* ---------- 内容 ---------- */
@@ -161,7 +170,7 @@ const initials = computed(() => {
   flex-direction: column;
   flex: 1;
   min-width: 0;
-  gap: 6px;
+  gap: 7px;
   padding: 18px 20px 16px;
 }
 
@@ -182,31 +191,43 @@ const initials = computed(() => {
 .title-arrow {
   display: inline-block;
   margin-left: 4px;
-  color: var(--ink-3);
+  color: var(--ink-lo);
   font-weight: 400;
-  transition: transform 0.18s ease, color 0.18s ease;
+  transition: transform 0.15s ease, color 0.15s ease;
 }
 
 .card:hover .title-arrow {
   transform: translate(2px, -2px);
-  color: var(--accent);
+  color: var(--blue);
+}
+
+.head-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
 }
 
 .year {
-  flex-shrink: 0;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-lo);
+  font-variant-numeric: tabular-nums;
 }
 
 .tagline {
   margin: 0;
   font-size: 13.5px;
   font-weight: 600;
-  color: var(--accent);
+  color: var(--ink);
 }
 
 .desc {
   margin: 0;
   font-size: 13.5px;
-  color: var(--ink-2);
+  color: var(--ink-md);
   line-height: 1.7;
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -219,10 +240,11 @@ const initials = computed(() => {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
+  flex-wrap: wrap; /* 窄屏下标签与链接按钮换行，不撑破卡片 */
   gap: 12px;
   margin-top: auto;
   padding-top: 12px;
-  border-top: 1px solid var(--line);
+  border-top: 1px solid var(--line-lo);
 }
 
 .tags {
@@ -235,12 +257,13 @@ const initials = computed(() => {
 }
 
 .tags li {
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 10.5px;
   letter-spacing: 0.08em;
   padding: 2px 7px;
   border: 1px solid var(--line);
-  color: var(--ink-2);
+  border-radius: 3px;
+  color: var(--ink-md);
   white-space: nowrap;
 }
 
@@ -250,32 +273,37 @@ const initials = computed(() => {
   flex-shrink: 0;
 }
 
+/* 链接按钮 → chips 形态：衬线粗体 + 描边 + 圆角；hover 实心蓝 */
 .link-btn {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 12.5px;
-  font-weight: 600;
+  font-family: var(--serif);
+  font-size: 12px;
+  font-weight: 700;
   padding: 6px 11px;
-  border: 1px solid var(--line-strong);
+  border: 1.5px solid var(--ink);
+  border-radius: 6px;
   color: var(--ink);
+  background: var(--paper);
   white-space: nowrap;
   transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 }
 
-.link-btn.github:hover {
-  background: var(--ink);
-  color: var(--bg);
+.link-btn:hover {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: #fff;
 }
 
 .link-btn.demo {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--accent-ink);
+  border-color: var(--blue);
+  color: var(--blue);
 }
 
 .link-btn.demo:hover {
-  filter: brightness(1.08);
+  background: var(--blue);
+  color: #fff;
 }
 
 /* ---------- 网格布局：上图下文 ---------- */
@@ -288,10 +316,14 @@ const initials = computed(() => {
   width: 100%;
 }
 
-/* ---------- 列表布局：左图右文 ---------- */
+/* ---------- 列表布局：左图右文，行间发丝线合并 ---------- */
 .layout-list {
   flex-direction: row;
   align-items: stretch;
+}
+
+.layout-list + .layout-list {
+  margin-top: -1px;
 }
 
 .layout-list .cover {
@@ -315,11 +347,23 @@ const initials = computed(() => {
     flex-direction: column;
   }
 
+  .layout-list + .layout-list {
+    margin-top: 0;
+  }
+
   .layout-list .cover {
     width: auto;
     margin: 0;
     border: none;
     border-bottom: 1px solid var(--line);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cover img,
+  .title-arrow,
+  .card {
+    transition: none;
   }
 }
 </style>

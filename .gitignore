@@ -4,3 +4,4 @@ dist
 *.local
 shots/
 test/qr-sample-*.png
+.mimosa/
