@@ -1,0 +1,20 @@
+{
+  "name": "rookery",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Rookery（海燕聚居地）—— 个人项目展示墙，纯前端，图文并茂地聚合我的小工具与小游戏。",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.1",
+    "playwright-core": "^1.62.1",
+    "vite": "^5.4.11"
+  }
+}
