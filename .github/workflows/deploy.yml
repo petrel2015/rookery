@@ -26,7 +26,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22 # 与本地开发一致；jsdom 30 需要较新的 Node
           cache: npm
 
       - name: Install dependencies
