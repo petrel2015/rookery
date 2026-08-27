@@ -1,0 +1,217 @@
+{
+  "schemaVersion": "mimosa-finding-ledger-batch/v1",
+  "batchId": "stop-20260827T155454149Z-66726-9d7651f783de",
+  "runId": "20260827T155454149Z-66726-9d7651f783de",
+  "runStatus": "inconclusive",
+  "coverage": {
+    "status": "partial",
+    "reasons": [
+      {
+        "code": "baseline_snapshot_unreadable",
+        "stage": "baseline-read",
+        "target": "test/contract.test.js",
+        "detail": "file is missing from task baseline",
+        "affectsCompletion": true
+      },
+      {
+        "code": "baseline_snapshot_unreadable",
+        "stage": "baseline-read",
+        "target": "test/donation.test.js",
+        "detail": "file is missing from task baseline",
+        "affectsCompletion": true
+      },
+      {
+        "code": "baseline_snapshot_unreadable",
+        "stage": "baseline-read",
+        "target": "test/qr-roundtrip.test.js",
+        "detail": "file is missing from task baseline",
+        "affectsCompletion": true
+      },
+      {
+        "code": "baseline_snapshot_unreadable",
+        "stage": "baseline-read",
+        "target": "src/utils/qrDraw.js",
+        "detail": "file is missing from task baseline",
+        "affectsCompletion": true
+      },
+      {
+        "code": "baseline_snapshot_unreadable",
+        "stage": "baseline-read",
+        "target": "src/data/donation.js",
+        "detail": "file is missing from task baseline",
+        "affectsCompletion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "baseline-read",
+        "target": "test/contract.test.js",
+        "detail": "baseline_snapshot_unreadable: file is missing from task baseline",
+        "affectsCompletion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "baseline-read",
+        "target": "test/donation.test.js",
+        "detail": "baseline_snapshot_unreadable: file is missing from task baseline",
+        "affectsCompletion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "baseline-read",
+        "target": "test/qr-roundtrip.test.js",
+        "detail": "baseline_snapshot_unreadable: file is missing from task baseline",
+        "affectsCompletion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "baseline-read",
+        "target": "src/utils/qrDraw.js",
+        "detail": "baseline_snapshot_unreadable: file is missing from task baseline",
+        "affectsCompletion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "baseline-read",
+        "target": "src/data/donation.js",
+        "detail": "baseline_snapshot_unreadable: file is missing from task baseline",
+        "affectsCompletion": true
+      }
+    ]
+  },
+  "source": {
+    "component": "zcode-hook",
+    "operationId": "Stop"
+  },
+  "revision": "3af81362903b136de4644974050ec9cec391ee6a",
+  "diffHash": "d02ae0119dbb088304a03249a770c638744cc75017af9a1e25e6bf6c25421814",
+  "rulesVersion": "unavailable",
+  "sessionHash": "2c95460011819936f7d10a5c67334d19a1110617349d37ed9f98c338b4e11b8f",
+  "reportRef": ".mimosa/reports/task-review-sess_f2dfb18d-7122-430f-9ccd-7ba84d43937d-20260827T155454149Z-66726-9d7651f783de.json",
+  "events": [
+    {
+      "eventId": "hook-ab1fd27e1eccc080cd35845e30eb7516",
+      "findingId": "mimosa-aa0eaa3b26b845f666522dd0",
+      "type": "finding_observed",
+      "at": "2026-08-27T15:54:54.149Z",
+      "identity": {
+        "projectRelativeFile": "package.json",
+        "ruleId": "mimosa.supply.version-range",
+        "codeEvidenceHash": "c15df0c97995e48306974abefc3a58328a2c97aaf6e50cba0f2e6a6d8b73658e",
+        "confidence": "stable"
+      },
+      "scope": "direct",
+      "line": 14,
+      "endLine": 14,
+      "reasonCode": "observe",
+      "reportedToAgent": false,
+      "evidence": {
+        "kind": "source",
+        "boundary": "candidate",
+        "producer": "deterministic",
+        "evidenceHash": "c15df0c97995e48306974abefc3a58328a2c97aaf6e50cba0f2e6a6d8b73658e"
+      },
+      "sequence": 0
+    },
+    {
+      "eventId": "hook-4a6874a40ab0156ce508e0a2466685e4",
+      "findingId": "mimosa-eb4b9440e48df1a5c9748277",
+      "type": "finding_observed",
+      "at": "2026-08-27T15:54:54.149Z",
+      "identity": {
+        "projectRelativeFile": "package.json",
+        "ruleId": "mimosa.supply.version-range",
+        "codeEvidenceHash": "d01f361d75bc35bf3b98cf0fc4f17ccf2f3fbc3f38a365f1285636052adc57c2",
+        "confidence": "stable"
+      },
+      "scope": "direct",
+      "line": 19,
+      "endLine": 19,
+      "reasonCode": "observe",
+      "reportedToAgent": false,
+      "evidence": {
+        "kind": "source",
+        "boundary": "candidate",
+        "producer": "deterministic",
+        "evidenceHash": "d01f361d75bc35bf3b98cf0fc4f17ccf2f3fbc3f38a365f1285636052adc57c2"
+      },
+      "sequence": 1
+    },
+    {
+      "eventId": "hook-47c1fe299f6a24ac7c8721a4c85a2fca",
+      "findingId": "mimosa-8641d562eda13babc1fc5618",
+      "type": "finding_observed",
+      "at": "2026-08-27T15:54:54.149Z",
+      "identity": {
+        "projectRelativeFile": "package.json",
+        "ruleId": "mimosa.supply.version-range",
+        "codeEvidenceHash": "44783dc44321e037d1696a11e8a64bd1d568115f2a030ee6df679f9b467d8611",
+        "confidence": "stable"
+      },
+      "scope": "direct",
+      "line": 20,
+      "endLine": 20,
+      "reasonCode": "observe",
+      "reportedToAgent": false,
+      "evidence": {
+        "kind": "source",
+        "boundary": "candidate",
+        "producer": "deterministic",
+        "evidenceHash": "44783dc44321e037d1696a11e8a64bd1d568115f2a030ee6df679f9b467d8611"
+      },
+      "sequence": 2
+    },
+    {
+      "eventId": "hook-e7aeef49da3f20d5bc3d4fb3d205bd5b",
+      "findingId": "mimosa-7c7f338fd3349162614eb638",
+      "type": "finding_observed",
+      "at": "2026-08-27T15:54:54.149Z",
+      "identity": {
+        "projectRelativeFile": "package.json",
+        "ruleId": "mimosa.supply.version-range",
+        "codeEvidenceHash": "5755688f3059de37bd56e1ab0a05670c8a3a2fdc043fd4f3895f7d52e24dde17",
+        "confidence": "stable"
+      },
+      "scope": "direct",
+      "line": 22,
+      "endLine": 22,
+      "reasonCode": "observe",
+      "reportedToAgent": false,
+      "evidence": {
+        "kind": "source",
+        "boundary": "candidate",
+        "producer": "deterministic",
+        "evidenceHash": "5755688f3059de37bd56e1ab0a05670c8a3a2fdc043fd4f3895f7d52e24dde17"
+      },
+      "sequence": 3
+    }
+  ],
+  "observedFindingIds": [],
+  "verifiedFiles": [
+    {
+      "file": "test/contract.test.js",
+      "direct": "complete",
+      "projectContext": "partial"
+    },
+    {
+      "file": "test/donation.test.js",
+      "direct": "complete",
+      "projectContext": "partial"
+    },
+    {
+      "file": "test/qr-roundtrip.test.js",
+      "direct": "complete",
+      "projectContext": "partial"
+    },
+    {
+      "file": "src/utils/qrDraw.js",
+      "direct": "complete",
+      "projectContext": "partial"
+    },
+    {
+      "file": "src/data/donation.js",
+      "direct": "complete",
+      "projectContext": "partial"
+    }
+  ],
+  "recordedAt": "2026-08-27T15:54:54.377Z"
+}

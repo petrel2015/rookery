@@ -1,0 +1,14 @@
+{
+  "schemaVersion": "mimosa-hook-status/v1",
+  "recordedAt": "2026-08-27T15:29:55.206Z",
+  "sessionId": "sess_f2dfb18d-7122-430f-9ccd-7ba84d43937d",
+  "event": "PostToolUse",
+  "toolName": "Write",
+  "file": "/tmp/rookery-docs/shot.mjs",
+  "outcome": "clear",
+  "coverage": "complete",
+  "findingCount": 0,
+  "durationMs": 3,
+  "hostState": "hook_complete",
+  "reportHint": ".mimosa/reports/"
+}

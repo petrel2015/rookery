@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "mimosa-finding-history/v1",
+  "runId": "20260827T155454149Z-66726-9d7651f783de",
+  "runStatus": "inconclusive",
+  "errors": [
+    "baseline-read:test/contract.test.js: baseline_snapshot_unreadable: file is missing from task baseline",
+    "baseline-read:test/donation.test.js: baseline_snapshot_unreadable: file is missing from task baseline",
+    "baseline-read:test/qr-roundtrip.test.js: baseline_snapshot_unreadable: file is missing from task baseline",
+    "baseline-read:src/utils/qrDraw.js: baseline_snapshot_unreadable: file is missing from task baseline",
+    "baseline-read:src/data/donation.js: baseline_snapshot_unreadable: file is missing from task baseline"
+  ],
+  "target": ".",
+  "revision": "3af81362903b136de4644974050ec9cec391ee6a",
+  "diffHash": "d02ae0119dbb088304a03249a770c638744cc75017af9a1e25e6bf6c25421814",
+  "rulesVersion": "unavailable",
+  "recordedAt": "2026-08-27T15:54:54.149Z",
+  "timing": {
+    "startedAt": "2026-08-27T15:54:53.346Z",
+    "completedAt": "2026-08-27T15:54:54.149Z",
+    "durationMs": 803
+  },
+  "tokens": {
+    "input": 0,
+    "output": 0,
+    "total": 0,
+    "modelCalls": 0,
+    "measurement": "known-zero"
+  },
+  "findings": {
+    "total": 4,
+    "bySeverity": {
+      "low": 4
+    },
+    "byStatus": {
+      "candidate": 4
+    }
+  },
+  "coverage": {
+    "status": "partial",
+    "reasonCounts": {
+      "baseline_snapshot_unreadable": 5,
+      "project_check_failed": 5
+    }
+  },
+  "evidenceBoundary": "static_only",
+  "immutableReport": ".mimosa/reports/task-review-sess_f2dfb18d-7122-430f-9ccd-7ba84d43937d-20260827T155454149Z-66726-9d7651f783de.json"
+}

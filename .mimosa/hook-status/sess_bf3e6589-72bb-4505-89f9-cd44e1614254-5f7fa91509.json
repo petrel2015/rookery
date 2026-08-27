@@ -1,0 +1,14 @@
+{
+  "schemaVersion": "mimosa-hook-status/v1",
+  "recordedAt": "2026-08-27T15:48:22.363Z",
+  "sessionId": "sess_bf3e6589-72bb-4505-89f9-cd44e1614254",
+  "event": "PostToolUse",
+  "toolName": "Write",
+  "file": "scripts/verify-donation.mjs",
+  "outcome": "clear",
+  "coverage": "complete",
+  "findingCount": 0,
+  "durationMs": 2,
+  "hostState": "hook_complete",
+  "reportHint": ".mimosa/reports/"
+}

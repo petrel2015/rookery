@@ -1,0 +1,14 @@
+{
+  "schemaVersion": "mimosa-hook-status/v1",
+  "recordedAt": "2026-08-27T15:49:40.560Z",
+  "sessionId": "sess_f2dfb18d-7122-430f-9ccd-7ba84d43937d",
+  "event": "PostToolUse",
+  "toolName": "Write",
+  "file": "/Users/aquarist/IdeaProjects/rookery/docs/zh/features/data-driven-wall.md",
+  "outcome": "clear",
+  "coverage": "complete",
+  "findingCount": 0,
+  "durationMs": 2,
+  "hostState": "hook_complete",
+  "reportHint": ".mimosa/reports/"
+}

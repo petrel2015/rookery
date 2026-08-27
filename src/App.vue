@@ -2,6 +2,7 @@
 import { ref, computed } from 'vue'
 import { PROJECTS, CATEGORIES } from './data/projects.js'
 import ProjectCard from './components/ProjectCard.vue'
+import DonationButton from './components/DonationButton.vue'
 
 const GITHUB_PROFILE = 'https://github.com/petrel2015'
 
@@ -119,6 +120,7 @@ function toggleDark() {
     <footer class="footer">
       <div class="container footer-inner eyebrow">
         <span>© 2026 PETREL2015</span>
+        <DonationButton />
         <span>VUE 3 + VITE · 纯静态，可托管到 GITHUB PAGES</span>
       </div>
     </footer>
