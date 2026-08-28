@@ -17,11 +17,11 @@ const initials = computed(() => {
   return p.name.replace(/[^A-Za-z]/g, '').slice(0, 2).toUpperCase() || 'P'
 })
 
-// 分类徽章（与页脚图例同色：蓝=扩展 绿=工具 紫=游戏）
+// 分类徽章（tax 四色避开紫黄红，与页脚图例同源：玄青=扩展 金褐=工具 靛蓝=游戏）
 const BADGES = {
-  ext: { cls: 'b-blue', label: 'EXT' },
-  tool: { cls: 'b-green', label: 'TOOL' },
-  game: { cls: 'b-violet', label: 'GAME' },
+  ext: { cls: 'b1', label: 'EXT' },
+  tool: { cls: 'b2', label: 'TOOL' },
+  game: { cls: 'b3', label: 'GAME' },
 }
 const badge = computed(() => BADGES[props.project.category] || null)
 </script>
@@ -94,7 +94,7 @@ const badge = computed(() => BADGES[props.project.category] || null)
 }
 
 .card:hover {
-  border-color: var(--blue-lo);
+  border-color: var(--brand-tint);
 }
 
 /* ---------- 封面 ---------- */
@@ -131,10 +131,10 @@ const badge = computed(() => BADGES[props.project.category] || null)
   background: var(--paper);
   border: 1px solid var(--line);
   border-radius: 3px;
-  color: var(--blue);
+  color: var(--brand);
 }
 
-/* 无截图时的占位封面：坐标纸 + 首字母 + 蓝方点 */
+/* 无截图时的占位封面：坐标纸 + 首字母 + 黄方点（黄只做色块） */
 .cover-fallback {
   display: flex;
   align-items: center;
@@ -161,7 +161,7 @@ const badge = computed(() => BADGES[props.project.category] || null)
   bottom: 14px;
   width: 8px;
   height: 8px;
-  background: var(--blue);
+  background: var(--hl);
 }
 
 /* ---------- 内容 ---------- */
@@ -198,7 +198,7 @@ const badge = computed(() => BADGES[props.project.category] || null)
 
 .card:hover .title-arrow {
   transform: translate(2px, -2px);
-  color: var(--blue);
+  color: var(--brand);
 }
 
 .head-meta {
@@ -273,7 +273,7 @@ const badge = computed(() => BADGES[props.project.category] || null)
   flex-shrink: 0;
 }
 
-/* 链接按钮 → chips 形态：衬线粗体 + 描边 + 圆角；hover 实心蓝 */
+/* 链接按钮 → pill 胶囊：紫描边悬停反白；demo = 紫实心（当期语义） */
 .link-btn {
   display: inline-flex;
   align-items: center;
@@ -281,29 +281,28 @@ const badge = computed(() => BADGES[props.project.category] || null)
   font-family: var(--serif);
   font-size: 12px;
   font-weight: 700;
-  padding: 6px 11px;
-  border: 1.5px solid var(--ink);
-  border-radius: 6px;
-  color: var(--ink);
+  padding: 5px 13px;
+  border: 1.5px solid var(--brand);
+  border-radius: 999px;
+  color: var(--brand);
   background: var(--paper);
   white-space: nowrap;
   transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 }
 
 .link-btn:hover {
-  background: var(--blue);
-  border-color: var(--blue);
+  background: var(--brand);
   color: #fff;
 }
 
 .link-btn.demo {
-  border-color: var(--blue);
-  color: var(--blue);
+  background: var(--brand);
+  color: #fff;
 }
 
 .link-btn.demo:hover {
-  background: var(--blue);
-  color: #fff;
+  background: var(--brand-deep);
+  border-color: var(--brand-deep);
 }
 
 /* ---------- 网格布局：上图下文 ---------- */

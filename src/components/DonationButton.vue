@@ -34,7 +34,7 @@ const open = ref(false)
 }
 
 .donate-entry:hover {
-  color: var(--blue);
+  color: var(--brand);
 }
 
 @media (prefers-reduced-motion: reduce) {

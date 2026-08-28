@@ -137,7 +137,7 @@ onBeforeUnmount(() => document.removeEventListener('keydown', onKeydown))
 </template>
 
 <style scoped>
-/* 遮罩：墨海军蓝罩层 */
+/* 遮罩：紫黑墨罩层 */
 .donation-overlay {
   position: fixed;
   inset: 0;
@@ -146,7 +146,7 @@ onBeforeUnmount(() => document.removeEventListener('keydown', onKeydown))
   align-items: center;
   justify-content: center;
   padding: 24px;
-  background: rgba(5, 28, 44, 0.5);
+  background: rgba(36, 31, 53, 0.55);
 }
 
 /* 弹窗：白纸底 + 墨描边 + 唯一浅投影，衬线标题 */
@@ -176,7 +176,7 @@ onBeforeUnmount(() => document.removeEventListener('keydown', onKeydown))
 }
 
 .donation-close:hover {
-  color: var(--blue);
+  color: var(--brand);
 }
 
 .donation-title {
@@ -192,7 +192,7 @@ onBeforeUnmount(() => document.removeEventListener('keydown', onKeydown))
   color: var(--ink-md);
 }
 
-/* 支付方式切换：分段式描边控件，激活实心蓝（弹窗内唯一彩色焦点） */
+/* 支付方式切换：分段式描边控件，激活实心紫（弹窗内唯一彩色焦点） */
 .donation-tabs {
   display: inline-flex;
   margin-bottom: 18px;
@@ -216,7 +216,7 @@ onBeforeUnmount(() => document.removeEventListener('keydown', onKeydown))
 }
 
 .donation-tab.active {
-  background: var(--blue);
+  background: var(--brand);
   color: #fff;
 }
 

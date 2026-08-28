@@ -19,12 +19,13 @@ const filtered = computed(() =>
 const countOf = (id) =>
   id === 'all' ? PROJECTS.length : PROJECTS.filter((p) => p.category === id).length
 
-// 指标条：挂载时由唯一数据源实时统计（可溯源）
+// 指标条 + 点阵条：挂载时由唯一数据源实时统计（可溯源）。
+// 点阵语义：一方块 = 一个项目；紫 = 当期分类，黄 = 全部对比（黄仅做色块）。
 const stats = computed(() => [
-  { v: PROJECTS.length, k: '全部项目' },
-  { v: countOf('ext'), k: '扩展与应用' },
-  { v: countOf('tool'), k: '在线工具' },
-  { v: countOf('game'), k: '游戏' },
+  { v: PROJECTS.length, k: '全部项目', dot: 'y', hl: true },
+  { v: countOf('ext'), k: '扩展与应用', dot: '', hl: false },
+  { v: countOf('tool'), k: '在线工具', dot: '', hl: false },
+  { v: countOf('game'), k: '游戏', dot: '', hl: false },
 ])
 
 function setLayout(mode) {
@@ -55,7 +56,7 @@ function toggleDark() {
       </div>
     </header>
 
-    <!-- 封面式头部：kicker + 大衬线标题（唯一蓝词）+ lede + 指标条 -->
+    <!-- 封面式头部：紫 kicker + 大衬线标题（唯一紫词）+ lede + 指标条/点阵条 -->
     <section class="hero container">
       <p class="kicker">ROOKERY / 海燕的聚居地 · 个人项目墙</p>
       <h1 class="hero-title">做点小东西<span class="accent">。</span></h1>
@@ -63,15 +64,19 @@ function toggleDark() {
       <div class="hero-stats">
         <div class="metric-strip">
           <div v-for="s in stats" :key="s.k" class="m">
-            <div class="v">{{ s.v }}</div>
+            <div class="v" :class="{ hl: s.hl }">{{ s.v }}</div>
             <div class="k">{{ s.k }}</div>
+            <span class="dots" aria-hidden="true">
+              <i v-for="n in s.v" :key="n" :class="s.dot"></i>
+            </span>
           </div>
         </div>
+        <p class="hero-legend">点阵：一方块 = 一个项目 · 紫 = 当期分类 · 黄 = 全部对比（仅底色）</p>
         <p class="hero-src">SOURCE: src/data/projects.js · 页面挂载时统计</p>
       </div>
     </section>
 
-    <!-- 工具条：分类筛选（chips）+ 视图切换 -->
+    <!-- 工具条：分类筛选（pill 胶囊）+ 视图切换 -->
     <div class="toolbar-wrap">
       <div class="container toolbar">
         <div class="chips" role="tablist" aria-label="项目分类">
@@ -118,12 +123,13 @@ function toggleDark() {
       </div>
     </div>
 
-    <!-- 项目墙：图表四件套容器（图题 / 图例副题 / 数据区 / 来源行 / 注脚） -->
+    <!-- 项目墙：章节头（黄方点）+ 图表四件套容器 -->
     <main class="container wall">
+      <p class="sec-no">§1 · ROOKERY WALL · 项目墙</p>
       <figure class="chart-frame">
         <figcaption class="chart-title">每件作品都跑在浏览器里：纯静态、零后端、断网也能完整重放</figcaption>
         <p class="chart-sub">
-          serif = 项目条目 · mono = 年份与标签 · blue = 可在线体验 · 点击条目下钻仓库
+          衬线 = 项目条目 · 等宽 = 年份与标签 · 紫 = 可在线体验 · 点击条目下钻仓库
         </p>
         <transition name="fade" mode="out-in">
           <div :key="activeCategory + layout" :class="layout === 'grid' ? 'grid' : 'list'">
@@ -133,10 +139,10 @@ function toggleDark() {
         <p class="chart-src">SOURCE: petrel2015/GitHub · 各项目仓库 README 与在线部署</p>
         <p class="chart-foot">NOTE: 封面为各项目界面截图；无截图项目渲染首字母占位封面。</p>
       </figure>
-      <p v-if="filtered.length === 0" class="empty">该分类暂无项目。</p>
+      <p v-if="filtered.length === 0" class="empty warn-note">该分类暂无项目。</p>
     </main>
 
-    <!-- 页脚：方法论 + 徽章图例 + 免责声明 -->
+    <!-- 页脚：研究札记 + 徽章图例 + 免责声明 -->
     <footer class="footer">
       <div class="container">
         <div class="note-box">
@@ -148,9 +154,9 @@ function toggleDark() {
           </p>
         </div>
         <div class="footer-legend" aria-label="分类图例">
-          <span class="legend-item"><span class="badge b-blue">EXT</span>扩展与应用</span>
-          <span class="legend-item"><span class="badge b-green">TOOL</span>在线工具</span>
-          <span class="legend-item"><span class="badge b-violet">GAME</span>游戏</span>
+          <span class="legend-item"><span class="badge b1">EXT</span>扩展与应用</span>
+          <span class="legend-item"><span class="badge b2">TOOL</span>在线工具</span>
+          <span class="legend-item"><span class="badge b3">GAME</span>游戏</span>
         </div>
         <div class="footer-inner eyebrow">
           <span>© 2026 PETREL2015</span>
@@ -196,11 +202,11 @@ function toggleDark() {
   font-weight: 700;
 }
 
-/* 电光蓝方形弹点（era-tag 语法） */
+/* 黄方点（与 .sec-no / favicon 同一语法；黄只做色块） */
 .brand-square {
-  width: 6px;
-  height: 6px;
-  background: var(--blue);
+  width: 8px;
+  height: 8px;
+  background: var(--hl);
 }
 
 .topbar-actions {
@@ -210,7 +216,7 @@ function toggleDark() {
 }
 
 .topbar-link:hover {
-  color: var(--blue);
+  color: var(--brand);
 }
 
 .theme-toggle {
@@ -244,7 +250,7 @@ function toggleDark() {
 }
 
 .hero-title .accent {
-  color: var(--blue);
+  color: var(--brand);
 }
 
 .hero-lede {
@@ -252,18 +258,23 @@ function toggleDark() {
   margin: 18px 0 0;
   font-size: 16.5px;
   color: var(--ink-md);
-  line-height: 1.75;
+  line-height: 1.78;
 }
 
 .hero-stats {
   margin-top: 34px;
-  max-width: 800px;
-  border-top: 1px solid var(--line-lo);
-  padding-top: 18px;
+  max-width: 840px;
+}
+
+.hero-legend {
+  margin: 16px 0 0;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-lo);
 }
 
 .hero-src {
-  margin: 16px 0 0;
+  margin: 6px 0 0;
   font-family: var(--mono);
   font-size: 10px;
   color: var(--ink-lo);
@@ -295,26 +306,25 @@ function toggleDark() {
   gap: 8px;
 }
 
-/* chips：衬线粗体 + 墨描边 + 6px 圆角；hover / active 实心蓝（全页唯一按钮形态） */
+/* pill 胶囊：紫描边 + 悬停/激活反白（紫 = 交互识别） */
 .chip {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 7px 13px;
+  padding: 6px 14px;
   font-family: var(--serif);
   font-size: 12.5px;
   font-weight: 700;
-  color: var(--ink);
+  color: var(--brand);
   background: var(--paper);
-  border: 1.5px solid var(--ink);
-  border-radius: 6px;
-  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  border: 1.5px solid var(--brand);
+  border-radius: 999px;
+  transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 .chip:hover,
 .chip.active {
-  background: var(--blue);
-  border-color: var(--blue);
+  background: var(--brand);
   color: #fff;
 }
 
@@ -326,11 +336,11 @@ function toggleDark() {
   opacity: 0.75;
 }
 
-/* 视图切换：分段式发丝线控件，激活为墨底 */
+/* 视图切换：分段式发丝线控件，激活为墨底（墨 = 参照，不与紫争当期） */
 .view-toggle {
   display: flex;
   border: 1px solid var(--line);
-  border-radius: 4px;
+  border-radius: 999px;
   overflow: hidden;
 }
 
@@ -354,17 +364,22 @@ function toggleDark() {
   color: var(--paper);
 }
 
-/* ---------- 项目墙：图表四件套容器 ---------- */
+/* ---------- 项目墙：章节头 + 图表四件套容器 ---------- */
 .wall {
   flex: 1;
   /* 纵向 flex 子项默认 min-width:auto，会被卡片内容撑出横向滚动 */
   min-width: 0;
-  padding-top: 14px;
+  padding-top: 26px;
   padding-bottom: 56px;
 }
 
+.wall .sec-no {
+  max-width: none;
+  margin-bottom: 18px;
+}
+
 .chart-frame {
-  margin: 28px 0 0;
+  margin: 6px 0 0;
 }
 
 .chart-title {
@@ -376,10 +391,8 @@ function toggleDark() {
 
 .chart-sub {
   font-family: var(--mono);
-  font-size: 10.5px;
+  font-size: 11px;
   color: var(--ink-lo);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
   margin: 0 0 22px;
   padding-bottom: 8px;
   border-bottom: 1px solid var(--line-lo);
@@ -413,10 +426,11 @@ function toggleDark() {
   gap: 0;
 }
 
+/* 空分类 = 缺数据，走警示语义（红仅此处出现） */
 .empty {
+  margin: 40px auto 0;
+  max-width: 420px;
   text-align: center;
-  color: var(--ink-lo);
-  padding: 60px 0;
 }
 
 /* 切换动画（尊重 reduced-motion） */
@@ -438,20 +452,20 @@ function toggleDark() {
   }
 }
 
-/* ---------- 页脚：方法论 ---------- */
+/* ---------- 页脚：研究札记 ---------- */
 .footer {
   border-top: 1px solid var(--line);
   padding: 36px 0 44px;
 }
 
 .footer .note-box {
-  max-width: 800px;
+  max-width: 840px;
 }
 
 .mono-path {
   font-family: var(--mono);
   font-size: 12px;
-  color: var(--blue);
+  color: var(--brand);
 }
 
 .footer-legend {

@@ -1,12 +1,11 @@
-# ET Book · 字体许可
+# Web Fonts · 字体许可
 
-本目录内三个字面 vendored 自 [tufte-css](https://github.com/edwardtufte/tufte-css)
-（`et-book/` 目录），按其原仓库声明以 **SIL Open Font License 1.1** 授权，
-允许自由内嵌、再分发与商业使用；禁止单独出售字库文件本身。
+本目录内 5 个 TTF 随 research-report-style 技能附带，均以 **SIL Open Font License 1.1**
+授权，允许自由内嵌、再分发与商业使用；禁止单独出售字库文件本身。
 
-- `et-book-roman-line-figures.woff` — regular 400
-- `et-book-display-italic-old-style-figures.woff` — italic 400
-- `et-book-bold-line-figures.woff` — bold 700
+- `Spectral-Regular.ttf` / `Spectral-Italic.ttf` / `Spectral-Bold.ttf` — Spectral
+  （Copyright 2017 The Spectral Project Authors, Production Type）
+- `IBMPlexMono-Regular.ttf` / `IBMPlexMono-Bold.ttf` — IBM Plex Mono
+  (Copyright IBM Corp., licenced under the SIL Open Font License)
 
-版权：Copyright (c) 2008–2015, Dmitry Krasny, Bonnie Scranton, Edward Tufte.
 完整许可证见 SIL 官网：<https://openfontlicense.org/open-font-license-official-text/>

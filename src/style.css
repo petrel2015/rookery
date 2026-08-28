@@ -1,77 +1,70 @@
 /* ---------------------------------- */
-/* 设计基调：机构投研报告 —— 白纸墨阶、发丝线、唯一电光蓝 */
-/* 衬线叙事（ET Book）+ 等宽事实（mono / tabular-nums） */
-/* tokens 提炼自 research-report-style（对标 McKinsey × GS-MS 研报） */
+/* 设计基调：机构研报 × 品牌三色（同程紫黄）—— v3 tokens */
+/* 三色宪法：紫 #56338A 交互识别（唯一彩色文字）/ 黄 #F6C343 仅底色强调 */
+/*           / 红 #B02418 仅警示。骨架：白纸、紫黑墨阶、发丝线、 */
+/*           Spectral+思源宋叙事、IBM Plex Mono 事实（tabular-nums）。 */
 /* ---------------------------------- */
 
-@font-face {
-  font-family: 'et-book';
-  font-style: normal;
-  font-weight: 400;
-  src: url('./assets/fonts/et-book-roman-line-figures.woff') format('woff');
-  font-display: swap;
-}
-@font-face {
-  font-family: 'et-book';
-  font-style: italic;
-  font-weight: 400;
-  src: url('./assets/fonts/et-book-display-italic-old-style-figures.woff') format('woff');
-  font-display: swap;
-}
-@font-face {
-  font-family: 'et-book';
-  font-style: normal;
-  font-weight: 700;
-  src: url('./assets/fonts/et-book-bold-line-figures.woff') format('woff');
-  font-display: swap;
-}
+@import './assets/fonts.css';
 
 :root {
   /* 纸面 */
   --paper: #ffffff;
-  --paper-hi: #f7f9fc; /* 面板 / hover 底 */
-  /* 墨阶（正文只用这三档） */
-  --ink: #051c2c;
-  --ink-md: #42566a;
-  --ink-lo: #8595a6;
+  --paper-hi: #f8f7fb; /* 紫调浅面板 */
+  /* 墨阶（紫黑调——连黑白灰都为品牌让色） */
+  --ink: #241f35;
+  --ink-md: #57516b;
+  --ink-lo: #8b8698;
   /* 发丝线 */
-  --line: #dbe2ea;
-  --line-lo: #eef1f6;
-  /* 强调色（全站唯一） */
-  --blue: #2251ff;
-  --blue-hi: #1233b8;
-  --blue-lo: #7d9bff;
-  /* 语义负面：只用于下跌/缺失/风险 */
-  --neg: #c22f4e;
-  /* 来源分类徽章专用色（正文与图表禁止挪用） */
-  --green: #008a6d;
-  --copper: #b07a10;
-  --violet: #7a45c9;
-  /* 字体：衬线叙事 + 等宽事实（中文回退衬线，绝不用黑体正文） */
-  --serif: 'et-book', 'Noto Serif SC', 'Songti SC', 'SimSun', 'Iowan Old Style', Palatino, Georgia,
-    serif;
-  --mono: Menlo, Consolas, 'SF Mono', monospace;
+  --line: #e3e0eb;
+  --line-lo: #f0eef5;
+  /* ── 三色宪法 ──
+     紫 = 交互识别：链接/kicker/章节号/图表当期系列/active，唯一可作文字的彩色
+     黄 = 仅底色：荧光笔压关键短语、对比系列、章节方点，永不作白底文字色
+     红 = 仅警示：下行/缺失/风险，不表达涨跌方向 */
+  --brand: #56338a;
+  --brand-deep: #3e2465;
+  --brand-tint: #c9bce2;
+  --wash: rgba(86, 51, 138, 0.05);
+  --wash-sel: rgba(86, 51, 138, 0.16);
+  --hl: #f6c343;
+  --hl-strong: rgba(246, 195, 67, 0.55);
+  --hl-soft: rgba(246, 195, 67, 0.16);
+  --neg: #b02418;
+  /* 来源分类徽章四色（避开紫/黄/红） */
+  --tax-1: #145d75; /* 玄青 — 扩展与应用 */
+  --tax-2: #8a6a10; /* 金褐 — 在线工具 */
+  --tax-3: #33427a; /* 靛蓝 — 游戏 */
+  --tax-4: #565170; /* 石板 — 其他 */
+  /* 字体两声部：衬线叙事 + 等宽事实。CJK 回退衬线，禁黑体正文 */
+  --serif: 'Spectral', 'Noto Serif SC', 'Songti SC', 'STSong', 'Iowan Old Style', Georgia, serif;
+  --mono: 'IBM Plex Mono', Menlo, Consolas, monospace;
   /* 唯一浅投影 token（弹窗 / 内嵌卡专用，其余组件禁投影） */
-  --shadow: 0 1px 2px rgba(5, 28, 44, 0.05), 0 8px 28px rgba(5, 28, 44, 0.07);
+  --shadow: 0 1px 2px rgba(36, 31, 53, 0.05), 0 8px 28px rgba(36, 31, 53, 0.07);
   /* 兼容别名：旧组件变量名 → 新 token（值即风格） */
   --bg: var(--paper);
   --surface: var(--paper);
   --font-mono: var(--mono);
 }
 
-/* 暗色：同一套纪律的倒置墨阶（深海军蓝纸 + 浅墨 + 亮一档的蓝） */
+/* 暗色：同一套纪律的倒置紫黑墨阶 */
 html.dark {
-  --paper: #0a141f;
-  --paper-hi: #101e2c;
-  --ink: #e7edf4;
-  --ink-md: #a3b1c0;
-  --ink-lo: #74889c;
-  --line: #223448;
-  --line-lo: #16222f;
-  --blue: #7d9bff;
-  --blue-hi: #a8bdff;
-  --blue-lo: #2251ff;
-  --neg: #e56a82;
+  --paper: #17141f;
+  --paper-hi: #1e1a2a;
+  --ink: #ece9f4;
+  --ink-md: #a9a3bc;
+  --ink-lo: #7d7791;
+  --line: #2f2a3f;
+  --line-lo: #241f33;
+  --brand: #a88fd4;
+  --brand-deep: #c9bce2;
+  --brand-tint: #56338a;
+  --wash: rgba(168, 143, 212, 0.07);
+  --wash-sel: rgba(168, 143, 212, 0.22);
+  --hl: #f6c343;
+  --hl-strong: rgba(246, 195, 67, 0.5);
+  --hl-soft: rgba(246, 195, 67, 0.2);
+  --neg: #d9705f;
   --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 10px 28px rgba(0, 0, 0, 0.4);
 }
 
@@ -89,17 +82,13 @@ body {
   color: var(--ink);
   font-family: var(--serif);
   font-size: 17px;
-  line-height: 1.68;
+  line-height: 1.72;
   -webkit-font-smoothing: antialiased;
   transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 ::selection {
-  background: rgba(34, 81, 255, 0.15);
-}
-
-html.dark ::selection {
-  background: rgba(125, 155, 255, 0.28);
+  background: var(--wash-sel);
 }
 
 a {
@@ -132,59 +121,104 @@ img {
   color: var(--ink-lo);
 }
 
-/* ── 封面 kicker：等宽大写宽字距、电光蓝 ── */
+/* ── 封面 kicker：紫等宽大写宽字距（交互识别色） ── */
 .kicker {
   font-family: var(--mono);
   font-size: 11.5px;
-  letter-spacing: 0.28em;
-  color: var(--blue);
+  letter-spacing: 0.3em;
+  color: var(--brand);
   text-transform: uppercase;
   margin: 0 0 14px;
 }
 
-/* ── 章节头：等宽编号 kicker + 3px 蓝短划 ── */
+/* ── 章节头：黄方点 + 紫等宽 kicker + 尾随发丝线 ── */
 .sec-no {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.26em;
-  color: var(--blue);
-  text-transform: uppercase;
   display: flex;
   align-items: center;
   gap: 10px;
   margin: 0 0 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  color: var(--brand);
+  text-transform: uppercase;
 }
 
 .sec-no::before {
   content: '';
-  flex: 0 0 26px;
-  height: 3px;
-  background: var(--blue);
+  width: 8px;
+  height: 8px;
+  background: var(--hl); /* 黄只做底色/色块 */
+  flex: 0 0 auto;
 }
 
-/* ── 指标条：等宽粗体蓝数值 + 小字说明 ── */
+.sec-no::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+/* ── 荧光笔：黄只做底色，永不作文字色 ── */
+.hl {
+  background: linear-gradient(to top, var(--hl-strong) 30%, transparent 30%);
+}
+
+.hl-soft {
+  background: linear-gradient(to top, var(--hl-soft) 42%, transparent 42%);
+}
+
+/* ── 指标条：顶重线卡 + 紫数值（可压黄）；警示 .v.neg 红 ── */
 .metric-strip {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0 28px;
+  gap: 0 26px;
+}
+
+.metric-strip .m {
+  border-top: 2px solid var(--ink);
+  padding-top: 10px;
 }
 
 .metric-strip .m .v {
   font-family: var(--mono);
-  font-size: 20px;
+  font-size: 21px;
   font-weight: 700;
-  color: var(--blue);
+  color: var(--brand);
   font-variant-numeric: tabular-nums;
+  display: inline-block; /* 荧光笔压得住行内盒 */
+}
+
+.metric-strip .m .v.neg {
+  color: var(--neg);
 }
 
 .metric-strip .m .k {
   font-size: 12px;
   color: var(--ink-md);
-  margin-top: 3px;
-  line-height: 1.5;
+  margin-top: 4px;
+  line-height: 1.55;
 }
 
-/* ── Analyst note：上下发丝线、无底色无左边条 ── */
+/* 点阵条：一个方块 = 一个单位；紫 = 当期分类，黄 = 全部对比（黄仅色块） */
+.dots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  margin-top: 8px;
+}
+
+.dots i {
+  width: 7px;
+  height: 7px;
+  background: var(--brand);
+}
+
+.dots i.y {
+  background: var(--hl);
+}
+
+/* ── 研究札记：上下发丝线 + 紫标签 ── */
 .note-box {
   border: 0;
   border-top: 1px solid var(--line);
@@ -196,39 +230,54 @@ img {
 }
 
 .note-box::before {
-  content: 'Methodology';
+  content: '研究札记 · Research note';
   display: block;
   font-family: var(--mono);
   font-size: 9.5px;
-  letter-spacing: 0.24em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--ink-lo);
+  color: var(--brand);
   margin-bottom: 8px;
 }
 
-/* ── 来源徽章（分类图例）── */
+/* ── 警示条：红仅在此类组件出现 ── */
+.warn-note {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--neg);
+  border: 1px dashed var(--neg);
+  border-radius: 4px;
+  padding: 8px 12px;
+  background: rgba(176, 36, 24, 0.045);
+}
+
+/* ── 来源徽章（tax 四色，避开紫黄红）── */
 .badge {
   display: inline-block;
   font-family: var(--mono);
   font-size: 9px;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  padding: 2px 7px;
+  padding: 2px 8px;
   border-radius: 3px;
   color: #fff;
   white-space: nowrap;
 }
 
-.badge.b-blue {
-  background: var(--blue);
+.badge.b1 {
+  background: var(--tax-1);
 }
 
-.badge.b-green {
-  background: var(--green);
+.badge.b2 {
+  background: var(--tax-2);
 }
 
-.badge.b-violet {
-  background: var(--violet);
+.badge.b3 {
+  background: var(--tax-3);
+}
+
+.badge.b4 {
+  background: var(--tax-4);
 }
 
 @media (max-width: 640px) {

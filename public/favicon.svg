@@ -1,4 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" fill="#d52b1e"/>
-  <text x="32" y="44" font-family="Helvetica, Arial, sans-serif" font-size="36" font-weight="700" fill="#fafaf7" text-anchor="middle">R</text>
+  <!-- research-report-style · favicon 模板 B（航线）：紫底 tile + 白点划弧 + 黄终点圆 -->
+  <!-- 海燕的航线：Rookery = 海燕聚居地，一条弧线从聚居地飞向远方 -->
+  <rect width="64" height="64" rx="14" fill="#56338A"/>
+  <path d="M14 44 Q 32 18 50 38" fill="none" stroke="#ffffff"
+        stroke-width="4.5" stroke-linecap="round" stroke-dasharray="1 9"/>
+  <circle cx="14" cy="44" r="5" fill="#ffffff"/>
+  <circle cx="50" cy="38" r="6.5" fill="#F6C343"/>
 </svg>

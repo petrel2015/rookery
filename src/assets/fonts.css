@@ -1,0 +1,38 @@
+/* ═══════════════════════════════════════════════════════════
+   research-report-style · 字体落地（同程紫黄默认主题）
+   Spectral（衬线，OFL）+ IBM Plex Mono（等宽，OFL），TTF vendored 在 ./fonts/。
+   中文回退思源宋/宋体栈写在 style.css 的 --serif 中。
+   ═══════════════════════════════════════════════════════════ */
+@font-face {
+  font-family: 'Spectral';
+  src: url(fonts/Spectral-Regular.ttf) format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Spectral';
+  src: url(fonts/Spectral-Italic.ttf) format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Spectral';
+  src: url(fonts/Spectral-Bold.ttf) format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'IBM Plex Mono';
+  src: url(fonts/IBMPlexMono-Regular.ttf) format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'IBM Plex Mono';
+  src: url(fonts/IBMPlexMono-Bold.ttf) format('truetype');
+  font-weight: 700;
+  font-display: swap;
+}
