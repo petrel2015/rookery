@@ -1,8 +1,11 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import DonationDialog from './DonationDialog.vue'
 import { DONATION_TEXT } from '../data/donation.js'
+import { lang, EN_DONATION } from '../i18n.js'
 
+// 中文规范文案来自数据文件（契约测试逐字锁定）；英文为运行时叠加
+const text = computed(() => (lang.value === 'en' ? EN_DONATION : DONATION_TEXT))
 const open = ref(false)
 </script>
 
@@ -13,7 +16,7 @@ const open = ref(false)
     aria-haspopup="dialog"
     @click="open = true"
   >
-    {{ DONATION_TEXT.entry }}
+    {{ text.entry }}
   </button>
   <DonationDialog :open="open" @close="open = false" />
 </template>

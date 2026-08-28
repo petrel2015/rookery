@@ -1,12 +1,30 @@
 <script setup>
-import { ref, watch, nextTick, onMounted, onBeforeUnmount } from 'vue'
+import { ref, computed, watch, nextTick, onMounted, onBeforeUnmount } from 'vue'
 import { DONATION_CONFIG, DONATION_TEXT } from '../data/donation.js'
+import { lang, EN_DONATION } from '../i18n.js'
 import { drawQrToCanvas } from '../utils/qrDraw.js'
 
 const props = defineProps({
   open: { type: Boolean, default: false }
 })
 const emit = defineEmits(['close'])
+
+// 中文规范文案来自数据文件（契约测试逐字锁定）；英文为运行时叠加
+const text = computed(() => (lang.value === 'en' ? EN_DONATION : DONATION_TEXT))
+// 渠道名：中文在 DONATION_CONFIG，英文在叠加层
+const channelName = (id) =>
+  lang.value === 'en'
+    ? id === 'alipay'
+      ? EN_DONATION.nameAlipay
+      : EN_DONATION.nameWechat
+    : DONATION_CONFIG[id].name
+const qrLabel = computed(() =>
+  lang.value === 'en'
+    ? channel.value === 'alipay'
+      ? EN_DONATION.qrAlipay
+      : EN_DONATION.qrWechat
+    : DONATION_CONFIG[channel.value].name + '收款二维码'
+)
 
 const channel = ref('alipay')
 const qrCanvas = ref(null)
@@ -21,9 +39,9 @@ const isMobileUA = () => /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAge
 // 显式更新而非 computed：UA 非响应式输入，弹窗每次会话都需重算提示
 const hint = ref(DONATION_TEXT.scanAlipay)
 function updateHint() {
-  if (qrFailed.value) hint.value = DONATION_TEXT.qrError
-  else if (channel.value === 'alipay' && isMobileUA()) hint.value = DONATION_TEXT.mobileFallback
-  else hint.value = channel.value === 'alipay' ? DONATION_TEXT.scanAlipay : DONATION_TEXT.scanWechat
+  if (qrFailed.value) hint.value = text.value.qrError
+  else if (channel.value === 'alipay' && isMobileUA()) hint.value = text.value.mobileFallback
+  else hint.value = channel.value === 'alipay' ? text.value.scanAlipay : text.value.scanWechat
 }
 
 function renderQr() {
@@ -95,12 +113,12 @@ onBeforeUnmount(() => document.removeEventListener('keydown', onKeydown))
 <template>
   <transition name="donate">
     <div v-if="open" class="donation-overlay" @click="onOverlayClick">
-      <div class="donation-dialog" role="dialog" aria-modal="true" :aria-label="DONATION_TEXT.title">
-        <button class="donation-close" type="button" :aria-label="DONATION_TEXT.close" @click="requestClose">
+      <div class="donation-dialog" role="dialog" aria-modal="true" :aria-label="text.title">
+        <button class="donation-close" type="button" :aria-label="text.close" @click="requestClose">
           ✕
         </button>
-        <h3 class="donation-title">{{ DONATION_TEXT.title }}</h3>
-        <p class="donation-subtitle">{{ DONATION_TEXT.subtitle }}</p>
+        <h3 class="donation-title">{{ text.title }}</h3>
+        <p class="donation-subtitle">{{ text.subtitle }}</p>
         <div class="donation-tabs">
           <button
             ref="tabAlipay"
@@ -110,7 +128,7 @@ onBeforeUnmount(() => document.removeEventListener('keydown', onKeydown))
             :aria-pressed="channel === 'alipay'"
             @click="switchTo('alipay')"
           >
-            {{ DONATION_CONFIG.alipay.name }}
+            {{ channelName('alipay') }}
           </button>
           <button
             ref="tabWechat"
@@ -120,14 +138,14 @@ onBeforeUnmount(() => document.removeEventListener('keydown', onKeydown))
             :aria-pressed="channel === 'wechat'"
             @click="switchTo('wechat')"
           >
-            {{ DONATION_CONFIG.wechat.name }}
+            {{ channelName('wechat') }}
           </button>
         </div>
         <div class="donation-qr-card">
           <canvas
             ref="qrCanvas"
             class="donation-qr"
-            :aria-label="DONATION_CONFIG[channel].name + '收款二维码'"
+            :aria-label="qrLabel"
           ></canvas>
         </div>
         <p class="donation-hint" data-donation-hint>{{ hint }}</p>
@@ -149,7 +167,9 @@ onBeforeUnmount(() => document.removeEventListener('keydown', onKeydown))
   background: rgba(36, 31, 53, 0.55);
 }
 
-/* 弹窗：白纸底 + 墨描边 + 唯一浅投影，衬线标题 */
+/* 弹窗：白纸底 + 墨描边 + 唯一浅投影，衬线标题。
+   显式重置 font/transform：组件渲染在 .footer-inner.eyebrow 内，
+   等宽+全大写会继承进来（中文不可见、英文现形） */
 .donation-dialog {
   position: relative;
   width: min(360px, calc(100vw - 48px));
@@ -159,6 +179,9 @@ onBeforeUnmount(() => document.removeEventListener('keydown', onKeydown))
   border: 1px solid var(--ink);
   border-radius: 8px;
   box-shadow: var(--shadow);
+  font-family: var(--serif);
+  text-transform: none;
+  letter-spacing: normal;
 }
 
 .donation-close {

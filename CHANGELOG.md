@@ -14,6 +14,17 @@ and the project follows [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- Bilingual UI (zh default / EN) with a topbar「EN / 中」toggle
+  (`src/i18n.js` lightweight layer; EN is a runtime overlay persisted to
+  `localStorage`). Project names / descriptions / tags remain single-language
+  in the data file.
+
+### Removed
+
+- Three explainer lines: the hero dot-legend & SOURCE line, and the wall
+  legend subtitle.
 ### Changed
 
 - The page now loads on the「可在线试用」(try online) chip by default;

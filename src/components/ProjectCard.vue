@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from 'vue'
+import { lang, t } from '../i18n.js'
 
 const props = defineProps({
   project: { type: Object, required: true },
@@ -8,6 +9,12 @@ const props = defineProps({
 
 // 封面点击的主链接：优先在线体验，否则 GitHub
 const primaryLink = computed(() => props.project.demo || props.project.github)
+
+// demo 按钮文案：中文用数据里的注册文案，英文走叠加映射
+const demoText = computed(() => {
+  const lbl = props.project.demoLabel || t.value.demoDefault
+  return t.value.demoMap[lbl] || lbl
+})
 
 const initials = computed(() => {
   const p = props.project
@@ -42,7 +49,7 @@ const badge = computed(() => BADGES[props.project.category] || null)
         <span class="fallback-initials">{{ initials }}</span>
         <span class="fallback-dot"></span>
       </span>
-      <span v-if="project.demo" class="cover-badge eyebrow">{{ project.demoLabel || '在线体验' }}</span>
+      <span v-if="project.demo" class="cover-badge eyebrow">{{ demoText }}</span>
     </a>
 
     <!-- 内容 -->
@@ -75,7 +82,7 @@ const badge = computed(() => BADGES[props.project.category] || null)
             GitHub
           </a>
           <a v-if="project.demo" class="link-btn demo" :href="project.demo" target="_blank" rel="noopener">
-            {{ project.demoLabel || '在线体验' }} ↗
+            {{ demoText }} ↗
           </a>
         </div>
       </div>

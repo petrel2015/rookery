@@ -218,7 +218,7 @@ img {
   background: var(--hl);
 }
 
-/* ── 研究札记：上下发丝线 + 紫标签 ── */
+/* ── 研究札记：上下发丝线 + 紫标签（标签文字由模板按语言渲染） ── */
 .note-box {
   border: 0;
   border-top: 1px solid var(--line);
@@ -229,15 +229,14 @@ img {
   line-height: 1.8;
 }
 
-.note-box::before {
-  content: '研究札记 · Research note';
+.note-box .note-label {
   display: block;
   font-family: var(--mono);
   font-size: 9.5px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--brand);
-  margin-bottom: 8px;
+  margin: 0 0 8px;
 }
 
 /* ── 警示条：红仅在此类组件出现 ── */

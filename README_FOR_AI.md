@@ -87,9 +87,12 @@ node scripts/shot.mjs     # 4 screenshots into shots/
 
 ## Important Behavior
 
-- The UI language is Chinese only (e.g. category chips 全部 / 可在线试用 /
-  仅看介绍, buttons like 在线体验). Documentation is bilingual;
-  the app is not.
+- The UI is bilingual (zh default / EN) via `src/i18n.js` — a topbar
+  「EN / 中」toggle switches language, persisted in `localStorage`
+  (`pw-lang`). Project names / taglines / tags stay in the data file and
+  are not translated. The canonical donation strings in
+  `src/data/donation.js` are Chinese (locked by tests); English donation
+  copy is a runtime overlay in `i18n.js`.
 - Filter chips split by demo availability, not project type: projects with
   a `demo` link are「可在线试用」, the rest are「仅看介绍」(plus `all`).
   The default chip on load is「可在线试用」— `all` is NOT the default.

@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { PROJECTS, CATEGORIES } from './data/projects.js'
+import { lang, t, setLang } from './i18n.js'
 import ProjectCard from './components/ProjectCard.vue'
 import DonationButton from './components/DonationButton.vue'
 
@@ -11,7 +12,6 @@ const activeCategory = ref('demo')
 const layout = ref(localStorage.getItem('pw-layout') || 'grid')
 const dark = ref(document.documentElement.classList.contains('dark'))
 
-// 分类筛选按「能否在线试用」划分：配了 demo 链接 → 可在线试用，否则仅看介绍
 const filtered = computed(() => {
   if (activeCategory.value === 'all') return PROJECTS
   if (activeCategory.value === 'demo') return PROJECTS.filter((p) => p.demo)
@@ -24,13 +24,13 @@ const countOf = (id) => {
   return PROJECTS.filter((p) => !p.demo).length
 }
 
-// 指标条 + 点阵条：挂载时由唯一数据源实时统计（可溯源）。
-// 点阵语义：一方块 = 一个项目；紫 = 当期分类，黄 = 全部对比（黄仅做色块）。
+// 指标条 + 点阵条：挂载时由唯一数据源实时统计
+// 点阵语义：一方块 = 一个项目；紫 = 分类型指标，黄 = 全部对比（黄仅做色块）
 const stats = computed(() => [
-  { v: PROJECTS.length, k: '全部项目', dot: 'y', hl: true },
-  { v: countOf('ext'), k: '扩展与应用', dot: '', hl: false },
-  { v: countOf('tool'), k: '在线工具', dot: '', hl: false },
-  { v: countOf('game'), k: '游戏', dot: '', hl: false },
+  { v: PROJECTS.length, k: t.value.stats[0], dot: 'y', hl: true },
+  { v: countOf('ext'), k: t.value.stats[1], dot: '', hl: false },
+  { v: countOf('tool'), k: t.value.stats[2], dot: '', hl: false },
+  { v: countOf('game'), k: t.value.stats[3], dot: '', hl: false },
 ])
 
 function setLayout(mode) {
@@ -43,6 +43,10 @@ function toggleDark() {
   document.documentElement.classList.toggle('dark', dark.value)
   localStorage.setItem('pw-theme', dark.value ? 'dark' : 'light')
 }
+
+function toggleLang() {
+  setLang(lang.value === 'zh' ? 'en' : 'zh')
+}
 </script>
 
 <template>
@@ -53,8 +57,11 @@ function toggleDark() {
         <span class="brand eyebrow">ROOKERY<span class="brand-square"></span></span>
         <nav class="topbar-actions">
           <a class="topbar-link eyebrow" :href="GITHUB_PROFILE" target="_blank" rel="noopener">GITHUB ↗</a>
-          <button class="theme-toggle" type="button" :title="dark ? '切换到亮色' : '切换到暗色'"
-            :aria-label="dark ? '切换到亮色模式' : '切换到暗色模式'" @click="toggleDark">
+          <button class="lang-toggle eyebrow" type="button"
+            :aria-label="lang === 'zh' ? 'Switch to English' : '切换到中文'"
+            @click="toggleLang">{{ lang === 'zh' ? 'EN' : '中' }}</button>
+          <button class="theme-toggle" type="button" :title="dark ? t.themeToLight : t.themeToDark"
+            :aria-label="dark ? t.themeToLightAria : t.themeToDarkAria" @click="toggleDark">
             {{ dark ? '☀' : '☾' }}
           </button>
         </nav>
@@ -63,9 +70,9 @@ function toggleDark() {
 
     <!-- 封面式头部：紫 kicker + 大衬线标题（唯一紫词）+ lede + 指标条/点阵条 -->
     <section class="hero container">
-      <p class="kicker">ROOKERY / 海燕的聚居地 · 个人项目墙</p>
-      <h1 class="hero-title">做点小东西<span class="accent">。</span></h1>
-      <p class="hero-lede">工具要顺手，游戏要好玩，全部纯前端。每只海燕都是一件作品。</p>
+      <p class="kicker">{{ t.kicker }}</p>
+      <h1 class="hero-title">{{ t.title }}<span class="accent">{{ t.titleAccent }}</span></h1>
+      <p class="hero-lede">{{ t.lede }}</p>
       <div class="hero-stats">
         <div class="metric-strip">
           <div v-for="s in stats" :key="s.k" class="m">
@@ -76,15 +83,13 @@ function toggleDark() {
             </span>
           </div>
         </div>
-        <p class="hero-legend">点阵：一方块 = 一个项目 · 紫 = 分类型指标 · 黄 = 全部对比（仅底色）</p>
-        <p class="hero-src">SOURCE: src/data/projects.js · 页面挂载时统计</p>
       </div>
     </section>
 
     <!-- 工具条：分类筛选（pill 胶囊）+ 视图切换 -->
     <div class="toolbar-wrap">
       <div class="container toolbar">
-        <div class="chips" role="tablist" aria-label="项目筛选">
+        <div class="chips" role="tablist" :aria-label="t.filtersAria">
           <button
             v-for="c in CATEGORIES"
             :key="c.id"
@@ -93,15 +98,15 @@ function toggleDark() {
             type="button"
             @click="activeCategory = c.id"
           >
-            {{ c.label }}<span class="chip-count">{{ countOf(c.id) }}</span>
+            {{ t.chips[c.id] }}<span class="chip-count">{{ countOf(c.id) }}</span>
           </button>
         </div>
-        <div class="view-toggle" role="group" aria-label="视图切换">
+        <div class="view-toggle" role="group" :aria-label="t.viewAria">
           <button
             type="button"
             :class="{ active: layout === 'grid' }"
-            title="网格视图"
-            aria-label="网格视图"
+            :title="t.gridTitle"
+            :aria-label="t.gridTitle"
             @click="setLayout('grid')"
           >
             <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
@@ -114,8 +119,8 @@ function toggleDark() {
           <button
             type="button"
             :class="{ active: layout === 'list' }"
-            title="列表视图"
-            aria-label="列表视图"
+            :title="t.listTitle"
+            :aria-label="t.listTitle"
             @click="setLayout('list')"
           >
             <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
@@ -128,49 +133,42 @@ function toggleDark() {
       </div>
     </div>
 
-    <!-- 项目墙：章节头（黄方点）+ 图表四件套容器 -->
+    <!-- 项目墙：章节头（黄方点）+ 项目条目 -->
     <main class="container wall">
-      <p class="sec-no">§1 · ROOKERY WALL · 项目墙</p>
+      <p class="sec-no">{{ t.secNo }}</p>
       <figure class="chart-frame">
-        <figcaption class="chart-title">每件作品都跑在浏览器里：纯静态、零后端、断网也能完整重放</figcaption>
-        <p class="chart-sub">
-          衬线 = 项目条目 · 等宽 = 年份与标签 · 紫 = 可在线体验 · 点击条目下钻仓库
-        </p>
+        <figcaption class="chart-title">{{ t.chartTitle }}</figcaption>
         <transition name="fade" mode="out-in">
-          <div :key="activeCategory + layout" :class="layout === 'grid' ? 'grid' : 'list'">
+          <div :key="activeCategory + layout + lang" :class="layout === 'grid' ? 'grid' : 'list'">
             <ProjectCard v-for="p in filtered" :key="p.id" :project="p" :layout="layout" />
           </div>
         </transition>
-        <p class="chart-src">SOURCE: petrel2015/GitHub · 各项目仓库 README 与在线部署</p>
-        <p class="chart-foot">NOTE: 封面为各项目界面截图；无截图项目渲染首字母占位封面。</p>
+        <p class="chart-src">{{ t.chartSrc }}</p>
+        <p class="chart-foot">{{ t.chartFoot }}</p>
       </figure>
-      <p v-if="filtered.length === 0" class="empty warn-note">该分类暂无项目。</p>
+      <p v-if="filtered.length === 0" class="empty warn-note">{{ t.empty }}</p>
     </main>
 
     <!-- 页脚：研究札记 + 徽章图例 + 免责声明 -->
     <footer class="footer">
       <div class="container">
         <div class="note-box">
+          <p class="note-label">{{ t.noteLabel }}</p>
           <p>
-            本页是纯静态单页应用：项目数据唯一来源为仓库内的
-            <code class="mono-path">src/data/projects.js</code>，随构建打包，运行期零请求、零埋点。
-            视图与主题偏好仅保存在浏览器 localStorage，不上传任何信息；「在线体验」链接指向各项目的
-            GitHub Pages 部署。
+            {{ t.noteBefore }}<code class="mono-path">src/data/projects.js</code>{{ t.noteAfter }}
           </p>
         </div>
-        <div class="footer-legend" aria-label="分类图例">
-          <span class="legend-item"><span class="badge b1">EXT</span>扩展与应用</span>
-          <span class="legend-item"><span class="badge b2">TOOL</span>在线工具</span>
-          <span class="legend-item"><span class="badge b3">GAME</span>游戏</span>
+        <div class="footer-legend" :aria-label="t.legend.join(' / ')">
+          <span class="legend-item"><span class="badge b1">EXT</span>{{ t.legend[0] }}</span>
+          <span class="legend-item"><span class="badge b2">TOOL</span>{{ t.legend[1] }}</span>
+          <span class="legend-item"><span class="badge b3">GAME</span>{{ t.legend[2] }}</span>
         </div>
         <div class="footer-inner eyebrow">
           <span>© 2026 PETREL2015</span>
           <DonationButton />
-          <span>VUE 3 + VITE · 纯静态，可托管到 GITHUB PAGES</span>
+          <span>{{ t.footerMeta }}</span>
         </div>
-        <p class="footer-disc">
-          DISCLAIMER — 项目信息由作者自述并随仓库发布，页面不收集任何用户数据。
-        </p>
+        <p class="footer-disc">{{ t.disc }}</p>
       </div>
     </footer>
   </div>
@@ -224,8 +222,8 @@ function toggleDark() {
   color: var(--brand);
 }
 
+.lang-toggle,
 .theme-toggle {
-  width: 30px;
   height: 30px;
   display: grid;
   place-items: center;
@@ -233,10 +231,20 @@ function toggleDark() {
   border-radius: 4px;
   background: transparent;
   color: var(--ink);
-  font-size: 14px;
+  font-size: 12px;
   transition: border-color 0.15s ease;
 }
 
+.lang-toggle {
+  padding: 0 9px;
+}
+
+.theme-toggle {
+  width: 30px;
+  font-size: 14px;
+}
+
+.lang-toggle:hover,
 .theme-toggle:hover {
   border-color: var(--ink);
 }
@@ -269,21 +277,6 @@ function toggleDark() {
 .hero-stats {
   margin-top: 34px;
   max-width: 840px;
-}
-
-.hero-legend {
-  margin: 16px 0 0;
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--ink-lo);
-}
-
-.hero-src {
-  margin: 6px 0 0;
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--ink-lo);
-  letter-spacing: 0.04em;
 }
 
 /* ---------- 工具条 ---------- */
@@ -391,15 +384,8 @@ function toggleDark() {
   font-weight: 700;
   font-size: 17.5px;
   letter-spacing: -0.01em;
-  margin: 0 0 3px;
-}
-
-.chart-sub {
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--ink-lo);
   margin: 0 0 22px;
-  padding-bottom: 8px;
+  padding-bottom: 12px;
   border-bottom: 1px solid var(--line-lo);
 }
 
