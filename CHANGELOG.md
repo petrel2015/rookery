@@ -14,6 +14,13 @@ and the project follows [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+
+- Category chips now split by demo availability: 全部 / 可在线试用 /
+  仅看介绍 (12 / 9 / 3, based on whether a `demo` link is set). The
+  `category` field is kept for the card badge and hero stats only —
+  it no longer participates in filtering.
+
 ## [0.1.0] - 2026-08-27
 
 First public revision. First released 2026-08-27; this entry summarizes the

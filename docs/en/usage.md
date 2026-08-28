@@ -34,7 +34,9 @@ toolbar stops being sticky:
   choice is stored the same way (`pw-layout`). Both keys persist until you
   clear site data in the browser — see [Privacy](./privacy.md).
 
-- **Category chips** filter the wall with a short fade transition. An empty
+- **Category chips** filter the wall with a short fade transition. Chips
+  split by demo availability: projects with a `demo` link are「可在线试用」
+  ("try it online"), the rest are「仅看介绍」("intro only"). An empty
   category would show "该分类暂无项目。" ("no projects in this category").
 
 Every card's cover and title link to the project's **live demo if one is
@@ -61,10 +63,10 @@ The design rationale is documented in
   tagline: 'One-line pitch',
   desc: 'Two or three sentences.',
   tags: ['tag-one', 'tag-two'],
-  category: 'tool',          // ext = extensions & apps, tool = online tools, game = games
+  category: 'tool',          // ext = extensions & apps, tool = online tools, game = games (badge & stats only)
   cover: 'covers/my-project.webp',
   github: 'https://github.com/petrel2015/my-project',
-  demo: 'https://petrel2015.github.io/my-project/',
+  demo: 'https://petrel2015.github.io/my-project/', // set it to land in the "try online" chip
   demoLabel: '在线体验',      // optional
   year: 2026,
 }

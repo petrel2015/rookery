@@ -87,11 +87,13 @@ node scripts/shot.mjs     # 4 screenshots into shots/
 
 ## Important Behavior
 
-- The UI language is Chinese only (e.g. category chips 全部 / 扩展与应用 /
-  在线工具 / 游戏, buttons like 在线体验). Documentation is bilingual;
+- The UI language is Chinese only (e.g. category chips 全部 / 可在线试用 /
+  仅看介绍, buttons like 在线体验). Documentation is bilingual;
   the app is not.
-- Category ids are fixed in code: `ext`, `tool`, `game` (plus `all`).
-  Adding a new category means editing `CATEGORIES`.
+- Filter chips split by demo availability, not project type: projects with
+  a `demo` link are「可在线试用」, the rest are「仅看介绍」(plus `all`).
+  The `category` field (`ext` / `tool` / `game`) only drives the card badge
+  and hero stats — it does not participate in filtering.
 - A card's title/cover link target is `demo || github` — the live demo wins
   when both exist.
 - If `cover` is empty, a placeholder cover renders; if `demo` is empty, only

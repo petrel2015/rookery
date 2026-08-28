@@ -5,14 +5,14 @@
  * 字段说明：
  *  - cover:     封面图路径（public/covers/ 下）；没有截图可留空，会渲染占位封面
  *  - coverFit:  'cover' 铺满（默认）| 'contain' 居中展示（适合 App 图标类素材）
- *  - category:  ext=扩展与应用 tool=在线工具 game=游戏
- *  - demo:      在线体验链接（GitHub Pages / 商店），没有可留空
+ *  - category:  项目类型，仅用于卡片徽章与首页指标：ext=扩展与应用 tool=在线工具 game=游戏
+ *  - demo:      在线体验链接（GitHub Pages / 商店）。分类筛选按它划分：
+ *               配了 demo → 「可在线试用」，没配 → 「仅看介绍」
  */
 export const CATEGORIES = [
   { id: 'all', label: '全部' },
-  { id: 'ext', label: '扩展与应用' },
-  { id: 'tool', label: '在线工具' },
-  { id: 'game', label: '游戏' },
+  { id: 'demo', label: '可在线试用' },
+  { id: 'intro', label: '仅看介绍' },
 ]
 
 export const PROJECTS = [

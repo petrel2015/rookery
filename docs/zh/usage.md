@@ -29,7 +29,8 @@
   `localStorage`（`pw-theme`）。布局选择同理（`pw-layout`）。两个键都会
   保留到你在浏览器里清除站点数据为止——详见[隐私说明](./privacy.md)。
 
-- **分类片**筛选项目墙，切换带短促淡入动画。空分类会显示
+- **分类片**筛选项目墙，切换带短促淡入动画。分类按能否在线试用划分：
+  配了 `demo` 链接的项目归入「可在线试用」，其余为「仅看介绍」。空分类会显示
   「该分类暂无项目。」。
 
 每张卡片的封面与标题指向该项目**注册了的在线演示；没有演示则指向其
@@ -53,10 +54,10 @@ GitHub 按钮；存在演示时再加一个按钮，文案按项目注册（默�
   tagline: '一句话定位',
   desc: '两三句话介绍。',
   tags: ['标签一', '标签二'],
-  category: 'tool',          // ext=扩展与应用 tool=在线工具 game=游戏
+  category: 'tool',          // ext=扩展与应用 tool=在线工具 game=游戏（仅用于卡片徽章与首页指标）
   cover: 'covers/my-project.webp',
   github: 'https://github.com/petrel2015/my-project',
-  demo: 'https://petrel2015.github.io/my-project/',
+  demo: 'https://petrel2015.github.io/my-project/', // 配了才进「可在线试用」分类
   demoLabel: '在线体验',      // 可选
   year: 2026,
 }

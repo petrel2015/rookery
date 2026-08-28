@@ -10,14 +10,18 @@ const activeCategory = ref('all')
 const layout = ref(localStorage.getItem('pw-layout') || 'grid')
 const dark = ref(document.documentElement.classList.contains('dark'))
 
-const filtered = computed(() =>
-  activeCategory.value === 'all'
-    ? PROJECTS
-    : PROJECTS.filter((p) => p.category === activeCategory.value)
-)
+// 分类筛选按「能否在线试用」划分：配了 demo 链接 → 可在线试用，否则仅看介绍
+const filtered = computed(() => {
+  if (activeCategory.value === 'all') return PROJECTS
+  if (activeCategory.value === 'demo') return PROJECTS.filter((p) => p.demo)
+  return PROJECTS.filter((p) => !p.demo)
+})
 
-const countOf = (id) =>
-  id === 'all' ? PROJECTS.length : PROJECTS.filter((p) => p.category === id).length
+const countOf = (id) => {
+  if (id === 'all') return PROJECTS.length
+  if (id === 'demo') return PROJECTS.filter((p) => p.demo).length
+  return PROJECTS.filter((p) => !p.demo).length
+}
 
 // 指标条 + 点阵条：挂载时由唯一数据源实时统计（可溯源）。
 // 点阵语义：一方块 = 一个项目；紫 = 当期分类，黄 = 全部对比（黄仅做色块）。
@@ -71,7 +75,7 @@ function toggleDark() {
             </span>
           </div>
         </div>
-        <p class="hero-legend">点阵：一方块 = 一个项目 · 紫 = 当期分类 · 黄 = 全部对比（仅底色）</p>
+        <p class="hero-legend">点阵：一方块 = 一个项目 · 紫 = 分类型指标 · 黄 = 全部对比（仅底色）</p>
         <p class="hero-src">SOURCE: src/data/projects.js · 页面挂载时统计</p>
       </div>
     </section>
@@ -79,7 +83,7 @@ function toggleDark() {
     <!-- 工具条：分类筛选（pill 胶囊）+ 视图切换 -->
     <div class="toolbar-wrap">
       <div class="container toolbar">
-        <div class="chips" role="tablist" aria-label="项目分类">
+        <div class="chips" role="tablist" aria-label="项目筛选">
           <button
             v-for="c in CATEGORIES"
             :key="c.id"

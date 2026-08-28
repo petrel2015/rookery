@@ -34,7 +34,16 @@ const check = (name, ok, detail = '') => {
 // 1. 卡片数量
 check('渲染 12 张卡片', (await page.locator('.card').count()) === 12)
 
-// 2. 所有封面图真实加载（naturalWidth > 0），占位封面除外
+// 2. 所有封面图真实加载（naturalWidth > 0），占位封面除外。
+// 先滚到底再回顶：loading="lazy" 的封面在折叠线以下不会自行触发加载
+await page.evaluate(async () => {
+  for (let y = 0; y <= document.body.scrollHeight; y += 600) {
+    window.scrollTo(0, y)
+    await new Promise((r) => setTimeout(r, 60))
+  }
+  window.scrollTo(0, 0)
+})
+await page.waitForTimeout(400)
 const imgs = await page.$$eval('.card .cover img', (els) =>
   els.map((e) => ({ alt: e.alt, w: e.naturalWidth }))
 )
@@ -63,10 +72,13 @@ const rowHeights = await page.$$eval('.grid .card', (els) => {
 check('同行卡片等高', new Set(rowHeights.map((h) => Math.round(h))).size <= rowHeights.length,
   rowHeights.map((h) => h.toFixed(0)).join(','))
 
-// 6. 分类筛选：游戏 = 3 张
-await page.click('.chip:has-text("游戏")')
+// 6. 分类筛选：按「能否在线试用」划分
+await page.click('.chip:has-text("可在线试用")')
 await page.waitForTimeout(250)
-check('筛选「游戏」显示 3 张卡片', (await page.locator('.card').count()) === 3)
+check('筛选「可在线试用」显示 9 张卡片', (await page.locator('.card').count()) === 9)
+await page.click('.chip:has-text("仅看介绍")')
+await page.waitForTimeout(250)
+check('筛选「仅看介绍」显示 3 张卡片', (await page.locator('.card').count()) === 3)
 await page.click('.chip:has-text("全部")')
 await page.waitForTimeout(250)
 

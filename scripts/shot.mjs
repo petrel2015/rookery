@@ -43,7 +43,7 @@ async function shot(name, { width, height, dark, list, category }) {
 
 await shot('grid-light', { width: 1440, height: 960 })
 await shot('list-light', { width: 1440, height: 960, list: true })
-await shot('grid-dark-game', { width: 1440, height: 960, dark: true, category: '游戏' })
+await shot('grid-dark-intro', { width: 1440, height: 960, dark: true, category: '仅看介绍' })
 await shot('grid-mobile', { width: 390, height: 844 })
 
 await browser.close()
