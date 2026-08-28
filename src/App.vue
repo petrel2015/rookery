@@ -6,7 +6,8 @@ import DonationButton from './components/DonationButton.vue'
 
 const GITHUB_PROFILE = 'https://github.com/petrel2015'
 
-const activeCategory = ref('all')
+// 默认落在「可在线试用」：进页面先看到能直接上手的作品
+const activeCategory = ref('demo')
 const layout = ref(localStorage.getItem('pw-layout') || 'grid')
 const dark = ref(document.documentElement.classList.contains('dark'))
 

@@ -31,8 +31,16 @@ const check = (name, ok, detail = '') => {
   if (!ok) failed++
 }
 
-// 1. 卡片数量
-check('渲染 12 张卡片', (await page.locator('.card').count()) === 12)
+// 1. 卡片数量：默认落在「可在线试用」，点「全部」才是全量
+check('默认「可在线试用」显示 9 张卡片', (await page.locator('.card').count()) === 9)
+check('首屏前三张是最常用三件套', await page.evaluate(() =>
+  [...document.querySelectorAll('.card .title')]
+    .slice(0, 3).map((e) => e.textContent.trim().replace('↗', '').trim())
+    .join('|') === 'JSON Viewer|时间戳工具|PW·GEN'
+))
+await page.click('.chip:has-text("全部")')
+await page.waitForTimeout(250)
+check('「全部」显示 12 张卡片', (await page.locator('.card').count()) === 12)
 
 // 2. 所有封面图真实加载（naturalWidth > 0），占位封面除外。
 // 先滚到底再回顶：loading="lazy" 的封面在折叠线以下不会自行触发加载

@@ -92,6 +92,10 @@ node scripts/shot.mjs     # 4 screenshots into shots/
   the app is not.
 - Filter chips split by demo availability, not project type: projects with
   a `demo` link are「可在线试用」, the rest are「仅看介绍」(plus `all`).
+  The default chip on load is「可在线试用」— `all` is NOT the default.
+  Wall order is the `PROJECTS` array order in `src/data/projects.js`;
+  the three most-used tools (JSON Viewer / Timestamp / PW·GEN) are
+  deliberately first.
   The `category` field (`ext` / `tool` / `game`) only drives the card badge
   and hero stats — it does not participate in filtering.
 - A card's title/cover link target is `demo || github` — the live demo wins

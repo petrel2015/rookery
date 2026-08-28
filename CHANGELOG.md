@@ -16,6 +16,11 @@ and the project follows [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
+- The page now loads on the「可在线试用」(try online) chip by default;
+  the three most-used tools (JSON Viewer / Timestamp / PW·GEN) lead the
+  wall (`PROJECTS` array order).
+### Changed
+
 - Category chips now split by demo availability: 全部 / 可在线试用 /
   仅看介绍 (12 / 9 / 3, based on whether a `demo` link is set). The
   `category` field is kept for the card badge and hero stats only —

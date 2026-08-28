@@ -36,7 +36,9 @@ toolbar stops being sticky:
 
 - **Category chips** filter the wall with a short fade transition. Chips
   split by demo availability: projects with a `demo` link are「可在线试用」
-  ("try it online"), the rest are「仅看介绍」("intro only"). An empty
+  ("try it online"), the rest are「仅看介绍」("intro only"). The page loads
+  on the "try online" chip, with the three most-used tools (JSON Viewer,
+  Timestamp, PW·GEN) first. An empty
   category would show "该分类暂无项目。" ("no projects in this category").
 
 Every card's cover and title link to the project's **live demo if one is
